@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Nour boutique hotel - PMS</title>
+    <style>
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary: #0a1128; 
+            --secondary: #d4af37; 
+            --bg: #f4f5f7;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-light: #6b7280;
+            --success: #059669;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --reserved: #3b82f6; 
+            --dirty: #78350f;
+            --inspected: #0284c7;
+            --ooo: #111827;
+            --border: #e5e7eb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        /* 1. System Core Background (Solid & Professional) */
+        body { 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            display: flex; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        /* 2. Login Overlay with Custom Image (Aligned Left) */
+        /* شاشة اللوجن: المربع عاليمين مع رابط الصورة */
+#loginScreen { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    /* ركز هون: امسح كلمة YOUR_LINK_HERE وحط رابط صورتك بين القوسين (الفواصل العلوية) */
+    background: linear-gradient(rgba(10, 17, 40, 0.2), rgba(10, 17, 40, 0.8)), url('img/back.jpeg') no-repeat center center; 
+    background-size: cover; 
+    z-index: 9999; 
+    display: flex; 
+    align-items: center; 
+    /* هاي اللي بتسحب المربع لليمين */
+    justify-content: flex-end; 
+    /* مسافة من اليمين عشان ما يلزق بالحيط ويطلع احترافي */
+    padding-right: 10%; 
+}
+        /* 1. تصميم الزجاج المصنفر (Glassmorphism) الفخم */
+.login-box { 
+    background: rgba(255, 255, 255, 0.05); /* شفافية عالية جداً */
+    backdrop-filter: blur(20px); /* تغبيش قوي عشان يبرز المربع */
+    -webkit-backdrop-filter: blur(20px);
+    padding: 40px; 
+    border-radius: 20px; /* حواف ناعمة جداً */
+    width: 350px; 
+    text-align: center; 
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); /* ظل عميق ورا القزاز */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* لمعة القزاز ع الأطراف */
+    border-top: 1px solid rgba(255, 255, 255, 0.3); /* لمعة إضاءة من فوق */
+}
+
+/* 2. تضبيط ألوان الخطوط لتكون بيضاء وتقرأ بوضوح */
+.login-box h1 { 
+    font-family: 'Playfair Display', serif; 
+    color: #ffffff !important; 
+    margin-bottom: 5px; 
+    font-size: 30px; 
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5); /* ظل للكلمة عشان تبرز */
+}
+.login-box p { 
+    font-size: 11px; 
+    color: #d1d5db !important; 
+    margin-bottom: 25px; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    font-weight: 700;
+}
+.login-box label { 
+    color: #ffffff !important; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5); 
+    letter-spacing: 1px;
+}
+
+/* 3. مربعات الإدخال (Inputs) لتتناسب مع القزاز */
+.login-box .form-control {
+    background: rgba(255, 255, 255, 0.1); /* خلفية شبه شفافة */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white; /* لون الكتابة جوا المربع أبيض */
+    border-radius: 10px;
+}
+.login-box .form-control::placeholder { 
+    color: rgba(255, 255, 255, 0.5); 
+}
+.login-box .form-control:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--secondary); /* لمعة ذهبية لما تكبس عليه */
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+/* 4. تعديل زر الدخول ليتماشى مع الفخامة */
+.login-box .btn-gold {
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    letter-spacing: 2px;
+}
+        /* 3. Sidebar (Solid Blue) */
+        .sidebar { 
+            width: 280px; 
+            background: var(--primary); 
+            color: white; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1); 
+            z-index: 10; 
+            flex-shrink: 0; 
+            overflow-y: auto;
+        }
+        .brand { padding: 35px 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); text-align: center; }
+        .brand h2 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--secondary); letter-spacing: 1px; line-height: 1.2; }
+        .brand p { font-size: 10px; color: #9ca3af; margin-top: 8px; text-transform: uppercase; letter-spacing: 2px; }
+        .nav-category { font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 5px 30px; font-weight: 700; }
+        .nav-item { padding: 12px 30px; cursor: pointer; transition: all 0.3s ease; font-size: 13px; font-weight: 600; color: #d1d5db; border-left: 4px solid transparent; display: flex; align-items: center; gap: 12px; }
+        .nav-item:hover, .nav-item.active { background-color: rgba(255,255,255,0.05); color: var(--secondary); border-left-color: var(--secondary); }
+        .logout-container { margin-top: auto; padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+
+        /* 4. Main Content (Solid Light Gray) */
+        .main-content { 
+            flex: 1; 
+            padding: 40px; 
+            overflow-y: auto; 
+            background-color: var(--bg); 
+            display: none; 
+        }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--primary); }
+        .user-badge { background: white; padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 700; color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid var(--secondary); display: flex; gap: 15px; align-items: center;}
+
+        /* Stats & Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border-top: 4px solid var(--secondary); transition: 0.3s; }
+        .stat-card h3 { color: var(--text-light); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .stat-card .value { font-size: 24px; font-weight: 700; color: var(--primary); font-family: 'Playfair Display', serif; }
+
+        .dash-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+        .card-panel { background: var(--card-bg); padding: 25px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px solid var(--border); margin-bottom: 30px; }
+        .card-title { font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;}
+
+        /* Floor Map & Rooms */
+        .floor-section { margin-bottom: 20px; background: white; padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
+        .floor-title { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--primary); font-weight: 700; margin-bottom: 15px;}
+        .rooms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
+        .room-card { padding: 15px 10px; border-radius: 10px; text-align: center; color: white; font-weight: 700; font-size: 14px; cursor: default; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 2px solid transparent;}
+        .room-card.available { background: var(--primary); }
+        .room-card.reserved { background: var(--reserved); }
+        .room-card.booked { background: var(--secondary); }
+        .room-card.dirty { background: var(--dirty); }
+        .room-card.cleaning { background: white; color: var(--text-main); border-color: var(--warning); }
+        .room-card.inspected { background: var(--inspected); }
+        .room-card.ooo { background: var(--ooo); border-color: #ef4444; color: #fca5a5; }
+        .room-card span { display: block; font-size: 10px; font-weight: 500; opacity: 0.9; margin-top: 5px; }
+
+        /* Tables & Forms */
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px; }
+        th { color: var(--text-light); font-weight: 700; text-transform: uppercase; font-size: 10px; letter-spacing: 1px; }
+        tr:hover td { background-color: #f9fafb; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 700; font-size: 11px; color: var(--primary); text-transform: uppercase;}
+        .form-control { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; outline: none; font-size: 13px; background: #f9fafb; transition: 0.3s; }
+        .form-control:focus { border-color: var(--secondary); background: white; box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1); }
+
+        /* Buttons */
+        .btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 12px; color: white; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; display: inline-block; text-align: center;}
+        .btn-primary { background-color: var(--primary); }
+        .btn-gold { background-color: var(--secondary); color: var(--primary); }
+        .btn-success { background-color: var(--success); }
+        .btn-danger { background-color: var(--danger); }
+        .btn-outline { background: transparent; color: var(--text-main); border: 1px solid var(--border); }
+        .btn-block { display: block; width: 100%; padding: 12px; font-size: 13px; }
+
+        .section { display: none; animation: fadeIn 0.3s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Mobile Menu Button & Overlay */
+        .mobile-menu-btn { display: none; background: var(--primary); color: var(--secondary); border: none; padding: 5px 10px; border-radius: 6px; font-size: 22px; cursor: pointer; }
+        .sidebar-overlay { display: none; }
+
+        /* Modals */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 17, 40, 0.8); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
+        .modal-content { background: white; padding: 30px; border-radius: 16px; width: 600px; max-height: 85vh; overflow-y: auto;}
+        .modal-header { display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 15px;}
+        .service-category { font-weight: 700; color: var(--primary); margin: 15px 0 10px 0; border-bottom: 2px solid var(--bg); padding-bottom: 5px; font-size: 13px; text-transform: uppercase;}
+        .service-item { display: flex; justify-content: space-between; padding: 10px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; cursor: pointer; font-weight: 600; font-size: 12px; background: #f9fafb;}
+        .service-item:hover { border-color: var(--secondary); background: white; }
+
+        /* Toasts */
+        .toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: var(--primary); color: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); font-weight: 600; font-size: 13px; border-left: 4px solid var(--secondary); }
+
+        /* Print Media Query (For Invoices) */
+        .invoice-box { display: none; }
+        @media print {
+            @page { margin: 0; size: A4; }
+            body { background: white; font-family: 'Plus Jakarta Sans', sans-serif; }
+            body * { visibility: hidden; }
+            .sidebar, .nav-item, .btn, .modal-overlay, .toast-container { display: none !important; }
+            
+            .invoice-box, .invoice-box * { visibility: visible; }
+            .invoice-box { 
+                display: block; position: absolute; left: 0; top: 0; width: 100%; min-height: 100vh;
+                padding: 40px; background: white; color: #111; 
+            }
+            .folio-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #111; padding-bottom: 20px; margin-bottom: 30px; }
+            .folio-brand h1 { font-family: 'Playfair Display', serif; font-size: 32px; margin-bottom: 5px; color: #111; }
+            .folio-brand p { font-size: 11px; color: #444; text-transform: uppercase; letter-spacing: 1px; line-height: 1.5; }
+            .folio-meta { text-align: right; }
+            .folio-meta h2 { font-size: 20px; font-weight: 700; margin-bottom: 10px; letter-spacing: 2px; }
+            .folio-meta p { font-size: 12px; color: #444; margin-bottom: 3px;}
+            
+            .invoice-guest-info { display:flex; justify-content:space-between; margin-bottom:30px; border: 1px solid #ddd; border-radius: 8px; padding:20px; background: #fcfcfc;}
+            .invoice-guest-info p { margin-bottom: 5px; font-size: 12px;}
+            
+            .folio-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+            .folio-table th { background: #f0f0f0; color: #111; padding: 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #111;}
+            .folio-table td { padding: 12px; border-bottom: 1px solid #ddd; font-size: 12px; }
+            
+            .totals-area { width: 50%; float: right; border-top: 2px solid #111; padding-top: 15px; }
+            .totals-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: #444;}
+            .totals-row.grand-total { font-weight: 800; font-size: 18px; margin-top: 15px; padding-top: 15px; border-top: 1px solid #111; color: #111;}
+        }
+
+        /* Professional Mobile Responsive Design */
+        @media (max-width: 900px) {
+            body { flex-direction: column; overflow: auto; }
+            .mobile-menu-btn { display: block; }
+            
+            .header { flex-direction: row; flex-wrap: wrap; gap: 15px; justify-content: space-between; align-items: center; }
+            .header h1 { font-size: 22px; }
+            .user-badge { width: 100%; justify-content: space-between; margin-top: 10px; }
+            
+            .sidebar { position: fixed; top: 0; left: -100%; width: 280px; height: 100vh; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 9999; flex-direction: column; padding: 0; border: none; }
+            .sidebar.open { left: 0; }
+            .sidebar-overlay.open { display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(10, 17, 40, 0.6); z-index: 9998; backdrop-filter: blur(2px); }
+            
+            .main-content { padding: 15px; height: 100vh; overflow-y: auto; }
+            .dash-layout, .form-grid { grid-template-columns: 1fr; }
+            table { display: block; overflow-x: auto; white-space: nowrap; font-size: 12px; }
+            .modal-content { width: 95%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileMenu()"></div>
+
+    <div id="loginScreen">
+        <div class="login-box">
+            <h1>Nour boutique hotel</h1>
+            <p>Login into your Account</p>
+            <div class="form-group" style="text-align:left;"><label>Username</label><input type="text" id="loginUser" class="form-control" placeholder="admin"></div>
+            <div class="form-group" style="text-align:left; margin-top:15px;"><label>Password</label><input type="password" id="loginPass" class="form-control" placeholder="admin123"></div>
+            <button class="btn btn-gold btn-block" style="margin-top:25px;" onclick="authenticateUser()">Secure Login</button>
+            <p style="margin-top:15px; font-size:10px; color:#ef4444;" id="loginError"></p>
+            <div style="margin-top: 20px; font-size: 10px; color: #6b7280; text-align: left;">
+                <strong>Test Accounts:</strong><br>
+                Admin: admin / admin123<br>
+                Front Desk: frontdesk / fd123<br>
+                Housekeeping: hk_staff / hk123<br>
+                Concierge: concierge / c123<br>
+                Night Audit: night_audit / na123
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+       <div class="brand">
+    
+    <h2>Nour Boutique</h2>
+    <p>Amman, Jordan</p>
+</div>
+        
+        <div id="dynamicMenu"></div>
+
+        <div class="logout-container">
+            <button class="btn btn-outline btn-block" style="color: #ef4444; border-color: #ef4444;" onclick="logoutUser()">Logout Session</button>
+        </div>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1 id="pageTitle">Home Status Screen</h1>
+            <div class="user-badge">
+                <span id="loggedInUserLabel">User: Admin</span>
+                <span id="userRoleBadge" style="font-size: 10px; background: var(--bg); padding: 2px 8px; border-radius: 10px;">Role</span>
+                <button class="btn btn-danger btn-sm" id="btnNightAudit" style="display: none;" onclick="runNightAudit()">Run End of Day (Night Audit)</button>
+            </div>
+        </div>
+        
+        <div id="dashboard" class="section active">
+            <div class="stats-grid">
+                <div class="stat-card"><h3>Occupancy %</h3><div class="value" id="occupancyRate">0%</div></div>
+                <div class="stat-card"><h3>ADR (Average Daily Rate)</h3><div class="value" id="adrVal">0 JOD</div></div>
+                <div class="stat-card"><h3>RevPAR</h3><div class="value" id="revparVal">0 JOD</div></div>
+                <div class="stat-card"><h3>Total Revenue</h3><div class="value" id="totalIncome">0 JOD</div></div>
+                <div class="stat-card"><h3>Expected Arrivals</h3><div class="value" id="expectedArrivals" style="color: var(--reserved)">0</div></div>
+                <div class="stat-card"><h3>Today's Check-outs</h3><div class="value" id="expectedDepartures" style="color: var(--danger)">0</div></div>
+            </div>
+            <div class="dash-layout">
+                <div class="card-panel">
+                    <div class="card-title">Live Room Status</div>
+                    <div id="cssChartContainer"></div>
+                </div>
+                <div class="card-panel"><div class="card-title">Security Audit Log</div><div class="audit-log" id="auditLogContainer"></div></div>
+            </div>
+        </div>
+
+        <div id="reservations" class="section">
+            <div class="card-panel" style="max-width: 950px;">
+                <div class="card-title">Create Reservation / Walk-in</div>
+                
+                <div class="form-grid-3" style="background: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #bbf7d0;">
+                    <div class="form-group">
+                        <label style="color: var(--success);">Booking Status</label>
+                        <select id="bookingStatus" class="form-control" style="border-color: var(--success); font-weight: bold;">
+                            <option value="checked-in">Walk-in (Check-In Now)</option>
+                            <option value="pending">Reservation (Future Arrival)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Booking Channel (Source)</label>
+                        <select id="bookingChannel" class="form-control">
+                            <option value="DIRECT BOOKING">Direct Booking (Walk-in/Phone)</option>
+                            <option value="OTA">OTA (Booking.com/Expedia)</option>
+                            <option value="GDS">GDS (Amadeus/Sabre)</option>
+                            <option value="CRS">CRS (Central Reservation)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Rate Code Identifier</label>
+                        <select id="rateCode" class="form-control">
+                            <option value="RACK">RACK (Standard Rate)</option>
+                            <option value="CORP">CORP (Corporate Discount)</option>
+                            <option value="PROMO">PROMO (Seasonal Offer)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group"><label>Guest Name</label><input type="text" id="guestName" class="form-control"></div>
+                    <div class="form-group"><label>National ID / Passport</label><input type="text" id="guestID" class="form-control"></div>
+                    <div class="form-group"><label>Phone Number</label><input type="tel" id="guestPhone" class="form-control"></div>
+                    <div class="form-group">
+                        <label>Payment Method</label>
+                        <select id="guestPayment" class="form-control">
+                            <option value="CREDIT CARD">Credit Card (Pre-auth)</option>
+                            <option value="CASH">Cash</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="Wire Transfer">Wire Transfer</option>
+                            <option value="E-Wallet(zain cash / cliq)">E-Wallet(zain cash / cliq)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group"><label>Flight Number (Optional)</label><input type="text" id="flightNo" class="form-control" placeholder="e.g. RJ 101"></div>
+                    <div class="form-group"><label>Est. Arrival Time</label><input type="time" id="arrivalTime" class="form-control"></div>
+
+                    <div class="form-group" style="grid-column: span 2; border-top: 1px solid var(--border); padding-top: 15px;">
+                        <div class="form-group" style="grid-column: span 2;">
+    <label>Guest Preferences / Special Requests</label>
+    <input type="text" id="guestPreferences" class="form-control" placeholder="e.g. High floor, Extra pillows, Allergy to nuts...">
+</div>
+                        <label>Room Category</label>
+                        <select id="roomTypeFilter" class="form-control" onchange="filterRoomsByType()"><option value="all">-- All --</option><option value="Standard">Standard Room</option><option value="Deluxe">Deluxe Room</option><option value="Executive Suite">Executive Suite</option></select>
+                    </div>
+                    <div class="form-group"><label>Assign Room</label><select id="roomSelect" class="form-control"></select></div><div></div>
+                    <div class="form-group"><label>Check-in Date</label><input type="date" id="checkIn" class="form-control"></div>
+                    <div class="form-group"><label>Check-out Date</label><input type="date" id="checkOut" class="form-control"></div>
+                </div>
+                 <div class="form-group">
+    <label>Meal Plan (Board Type)</label>
+    <select id="mealPlan" class="form-control">
+        <option value="RO">Room Only (RO) - Base Rate</option>
+        <option value="BB">Breakfast - +15 JOD/Night</option>
+        <option value="BB">Lunch - +15 JOD/Night</option>
+        <option value="BB">Dinner - +15 JOD/Night</option>
+        <option value="HB">Half Board (HB) - +30 JOD/Night</option>
+        <option value="FB">Full Board (FB) - +45 JOD/Night</option>
+    </select>
+</div>
+<br>
+<br>
+                <button class="btn btn-gold btn-block" onclick="createReservation()">Secure Booking & Update Inventory</button>
+            </div>
+           
+        </div>
+
+        <div id="arrival-screen" class="section">
+            <div class="card-panel">
+                <table>
+                    <thead><tr><th>Guest Name</th><th>Channel / Rate</th><th>Room</th><th>Dates & Arrival Info</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody id="pendingTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="in-house" class="section">
+            <div class="card-panel">
+                <table>
+                    <thead><tr><th>Guest Name</th><th>Room</th><th>Stay Rate</th><th>POS Services</th><th>Actions</th></tr></thead>
+                    <tbody id="inHouseTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="crm" class="section">
+            <div class="card-panel">
+                <div class="card-title">Guest Records (CRM)</div>
+                <input type="text" id="crmSearch" class="search-box form-control" placeholder="Search guests by name or ID..." onkeyup="renderCRMTable()" style="margin-bottom: 20px;">
+                <table>
+                    <thead><tr><th>Name</th><th>ID</th><th>Phone</th><th>Total Stays</th><th>Actions</th></tr></thead>
+                    <tbody id="crmTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="complaints" class="section">
+            <div class="card-panel">
+                <div class="card-title">Guest Complaints Data</div>
+                <div class="form-grid" style="grid-template-columns: 1fr 2fr; align-items: end;">
+                    <div class="form-group"><label>Select In-House Guest</label><select id="complaintGuestSelect" class="form-control"></select></div>
+                    <div class="form-group"><label>Complaint Details</label><input type="text" id="complaintText" class="form-control" placeholder="e.g. AC making noise"></div>
+                </div>
+                <button class="btn btn-danger" style="margin-bottom: 20px;" onclick="logComplaint()">Log Complaint</button>
+                
+                <table>
+                    <thead><tr><th>Guest</th><th>Room</th><th>Issue</th><th>Status</th><th>Action</th></tr></thead>
+                    <tbody id="complaintsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="rooms" class="section">
+            <div class="card-panel" style="background: transparent; border: none; box-shadow: none; padding: 0;">
+                <div style="margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 15px; font-size: 11px; font-weight: 700; background: white; padding: 15px; border-radius: 10px; border: 1px solid var(--border);">
+                    <span style="color:var(--primary);"><span class="status-dot" style="background:var(--primary);"></span>Available</span>
+                    <span style="color:var(--reserved);"><span class="status-dot" style="background:var(--reserved);"></span>Reserved (Pending)</span>
+                    <span style="color:var(--secondary);"><span class="status-dot" style="background:var(--secondary);"></span>Occupied</span>
+                    <span style="color:var(--dirty);"><span class="status-dot" style="background:var(--dirty);"></span>Dirty</span>
+                    <span style="color:var(--warning);"><span class="status-dot" style="background:var(--warning); border: 1px solid #ccc;"></span>Cleaning</span>
+                    <span style="color:var(--inspected);"><span class="status-dot" style="background:var(--inspected);"></span>Inspected</span>
+                    <span style="color:var(--ooo);"><span class="status-dot" style="background:var(--ooo);"></span>Out of Order (OOO)</span>
+                </div>
+                <div id="floorsContainer"></div>
+            </div>
+        </div>
+
+        <div id="housekeeping" class="section">
+            <div class="card-panel">
+                <div class="card-title">Housekeeping Workflow (Dirty → Cleaning → Inspected → Available)</div>
+                <table>
+                    <thead><tr><th>Room No.</th><th>Type</th><th>Current Status</th><th>Required Action</th></tr></thead>
+                    <tbody id="housekeepingTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="maintenance" class="section">
+            <div class="card-panel">
+                <div class="form-grid">
+                    <div class="form-group"><label>Block Room</label><select id="maintRoomSelect" class="form-control"></select></div>
+                    <div class="form-group"><label>Reason</label><input type="text" id="maintReason" class="form-control"></div>
+                </div>
+                <button class="btn btn-danger" onclick="setOutOfOrder()">Mark Out of Order (OOO)</button>
+                <h4 style="margin: 20px 0 10px;">Active OOO Rooms</h4>
+                <table><tbody id="oooTable"></tbody></table>
+            </div>
+        </div>
+            <div id="kpi" class="section">
+    <div class="card-panel">
+        <div class="card-title">Employee KPI Performance </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Role</th>
+                    <th>Reservations Made</th>
+                    <th>POS Revenue Generated (JOD)</th>
+                </tr>
+            </thead>
+            <tbody id="kpiTableBody"></tbody>
+        </table>
+            </div>
+        </div>
+        <div id="sop" class="section">
+            <div class="card-panel">
+                <div class="card-title">SOP Manual Vault</div>
+                <div style="text-align:center; padding: 30px;">
+                    <p style="color: var(--danger); font-weight:bold; margin-bottom: 10px;">RESTRICTED ACCESS</p>
+                    <p style="font-size: 13px; color: var(--text-light);">Secure PDF documents containing standard operating procedures for Night Audit, Cash Handling, and Emergency Protocols.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="servicesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Post POS Charge</h3>
+                <span style="cursor:pointer; font-weight:bold; font-size:16px;" onclick="closeModal('servicesModal')">✕</span>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 15px; background: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #bbf7d0;">
+                <label style="color: var(--success); font-weight: bold; font-size: 12px; margin-bottom: 5px;">Payment Settlement Method</label>
+                <select id="posPaymentMethod" class="form-control" style="font-weight: bold; border-color: var(--success);">
+                    <option value="room">Charge to Room Folio (Pay at Check-out)</option>
+                    <option value="direct">Paid Direct (Cash/Card at Outlet)</option>
+                </select>
+            </div>
+            
+            <div id="predefinedServicesList"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="crmProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Guest Master Account</h3>
+                <span style="cursor:pointer;" onclick="closeModal('crmProfileModal')">✕</span>
+            </div>
+            <div class="crm-profile-header">
+                <div id="crmDisplayMode">
+                    <h2 id="crmModName" style="margin-bottom: 5px;"></h2>
+                    <p id="crmModID" style="font-size: 12px; opacity: 0.8;"></p>
+                    <p id="crmModPhone" style="font-size: 12px; color: var(--primary); font-weight: 700; margin-bottom: 15px;"></p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+                        <button class="btn btn-outline" onclick="toggleEditCRM()">Edit Profile</button>
+                        <button class="btn btn-primary" onclick="quickBookGuest()">Quick Book</button>
+                    </div>
+                </div>
+                <div id="crmEditMode" style="display: none; margin-bottom: 15px; background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid var(--border);">
+                    <label style="font-size: 11px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 5px;">Guest Name</label>
+                    <input type="text" id="editCrmName" class="form-control" style="margin-bottom: 10px;">
+                    <label style="font-size: 11px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 5px;">Phone Number</label>
+                    <input type="text" id="editCrmPhone" class="form-control" style="margin-bottom: 15px;">
+                    <div style="display: flex; gap: 10px;">
+                        <button class="btn btn-gold" onclick="saveCRMProfile()">Save Changes</button>
+                        <button class="btn btn-outline" onclick="toggleEditCRM()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            
+            <h4 style="margin: 15px 0 5px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">Guest Preferences & Notes</h4>
+            <div id="crmCommentsContainer" style="max-height: 100px; overflow-y: auto; margin-bottom: 10px;"></div>
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <input type="text" id="newCommentInput" class="form-control" placeholder="Add Preference...">
+                <button class="btn btn-gold" onclick="addGuestComment()">Add</button>
+            </div>
+            
+            <h4 style="margin: 15px 0 5px; border-bottom: 1px solid var(--border); padding-bottom: 5px;">Records Data</h4>
+            <div style="overflow-x: auto;">
+                <table style="font-size: 11px; width: 100%;"><tbody id="crmHistoryTable"></tbody></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="invoice-box" id="invoiceBox">
+        <div class="folio-header">
+            <div class="folio-brand">
+                <h1> Nour boutique hotel</h1>
+                <p> Amman, Jordan</p>
+            </div>
+            <div class="folio-meta">
+                <h2>GUEST INVOICE FOLIO</h2>
+                <p id="invNumber">Folio No: </p>
+                <p id="invDate">Date: </p>
+            </div>
+        </div>
+        <div class="invoice-guest-info" id="invoiceGuestInfo"></div>
+        <table class="folio-table">
+            <thead><tr><th style="width: 15%;">Date</th><th style="width: 60%;">Description</th><th style="width: 25%; text-align: right;">Amount (JOD)</th></tr></thead>
+            <tbody id="invoiceItems"></tbody>
+        </table>
+        <div class="totals-area">
+            <div class="totals-row"><span>Subtotal (Excl. Tax):</span><span id="invSubtotal">0.00 JOD</span></div>
+            <div class="totals-row"><span>Service (10%):</span><span id="invService">0.00 JOD</span></div>
+            <div class="totals-row"><span>Tax (16%):</span><span id="invTax">0.00 JOD</span></div>
+            <div class="totals-row grand-total"><span>Total Amount Due:</span><span id="invTotal">0.00 JOD</span></div>
+        </div>
+    </div>
+    
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        const USER_DB = {
+            'admin': { pass: 'admin123', role: 'ADMIN', name: 'General Manager' },
+            'frontdesk': { pass: 'fd123', role: 'FRONTDESK', name: 'Receptionist' },
+            'hk_staff': { pass: 'hk123', role: 'HOUSEKEEPING', name: 'HK Supervisor' },
+            'concierge': { pass: 'c123', role: 'CONCIERGE', name: 'Chief Concierge' },
+            'night_audit': { pass: 'na123', role: 'NIGHTAUDIT', name: 'Night Auditor' }
+        };
+
+        const MENU_STRUCTURE = [
+            { category: 'Front Desk & Analytics', items: [
+                { id: 'dashboard', label: 'Home Status (Dashboard)', roles: ['ADMIN', 'FRONTDESK', 'NIGHTAUDIT'] },
+                { id: 'reservations', label: 'Reservation Screen', roles: ['ADMIN', 'FRONTDESK', 'NIGHTAUDIT'] },
+                { id: 'arrival-screen', label: 'Arrival Screen & Flights', roles: ['ADMIN', 'FRONTDESK', 'CONCIERGE'] },
+                { id: 'in-house', label: 'In-House Guests Screen', roles: ['ADMIN', 'FRONTDESK', 'NIGHTAUDIT'] }
+            ]},
+            { category: 'Profiles & Complaints', items: [
+                { id: 'crm', label: 'Guest Records Data', roles: ['ADMIN', 'FRONTDESK', 'CONCIERGE'] },
+                { id: 'complaints', label: 'Complaints Management', roles: ['ADMIN', 'CONCIERGE'] }
+            ]},
+            { category: 'Property Operations', items: [
+                { id: 'rooms', label: 'Live Property Map', roles: ['ADMIN', 'HOUSEKEEPING'] },
+                { id: 'housekeeping', label: 'Housekeeping (SoD)', roles: ['ADMIN', 'HOUSEKEEPING'] },
+                { id: 'maintenance', label: 'Maintenance (OOO)', roles: ['ADMIN'] }
+            ]},
+            { category: 'System Admin', items: [
+    { id: 'sop', label: 'SOP Manual (PDFs)', roles: ['ADMIN'] },
+    { id: 'kpi', label: 'Employee KPIs', roles: ['ADMIN'] } // ضفنا هاي هون
+]}
+        ];
+
+        let currentUser = null;
+        let currentRole = null;
+
+        function authenticateUser() {
+            const u = document.getElementById('loginUser').value.toLowerCase();
+            const p = document.getElementById('loginPass').value;
+            
+            if(USER_DB[u] && USER_DB[u].pass === p) {
+                currentUser = USER_DB[u].name;
+                currentRole = USER_DB[u].role;
+                
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                document.getElementById('loggedInUserLabel').innerText = `User: ${currentUser}`;
+                document.getElementById('userRoleBadge').innerText = currentRole;
+                
+                document.getElementById('btnNightAudit').style.display = (currentRole === 'ADMIN' || currentRole === 'NIGHTAUDIT') ? 'block' : 'none';
+
+                buildSidebar();
+                logAction(`System Login: ${currentUser} (${currentRole}) authenticated.`);
+                updateUI();
+                if(document.getElementById('kpiTableBody')) renderKPI();
+            } else {
+                document.getElementById('loginError').innerText = "Invalid Credentials. Access Denied.";
+            }
+        }
+
+        function logoutUser() {
+            logAction(`System Logout: ${currentUser} logged out.`);
+            currentUser = null;
+            currentRole = null;
+            document.getElementById('loginUser').value = '';
+            document.getElementById('loginPass').value = '';
+            document.getElementById('loginError').innerText = '';
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+        }
+
+        function buildSidebar() {
+            const menuContainer = document.getElementById('dynamicMenu');
+            let html = '';
+            let firstTabSet = false;
+
+            MENU_STRUCTURE.forEach(group => {
+                const visibleItems = group.items.filter(item => item.roles.includes(currentRole));
+                if(visibleItems.length > 0) {
+                    html += `<div class="nav-category">${group.category}</div>`;
+                    visibleItems.forEach(item => {
+                        html += `<div class="nav-item" onclick="switchTab('${item.id}', this)">${item.label}</div>`;
+                        if(!firstTabSet) {
+                            setTimeout(() => switchTab(item.id, menuContainer.querySelector('.nav-item')), 10);
+                            firstTabSet = true;
+                        }
+                    });
+                }
+            });
+            menuContainer.innerHTML = html;
+        }
+
+       
+        function generateHotelRooms() {
+            let generatedRooms = [];
+            for (let floor = 1; floor <= 5; floor++) {
+                for (let i = 1; i <= 18; i++) {
+                    let roomNo = (floor * 100) + i;
+                    let type = (floor === 5) ? 'Executive Suite' : (i <= 6 ? 'Standard' : 'Deluxe');
+                    let price = (floor === 5) ? 450 : (type === 'Standard' ? 150 : 220);
+                    generatedRooms.push({ id: roomNo, floor: floor, type: type, price: price, status: 'available', maintReason: '' });
+                }
+            }
+            return generatedRooms;
+        }
+
+       const posCatalog = {
+            "DUNES RESTAURANT": [
+                { name: 'Continental Breakfast Buffet', price: 15 },
+                { name: 'Traditional Arabic Breakfast', price: 12 },
+                { name: 'Grilled Salmon with Quinoa', price: 24 },
+                { name: 'Wagyu Beef Burger & Fries', price: 18 },
+                { name: 'Chicken Alfredo Pasta', price: 16 },
+                { name: 'Traditional Mansaf', price: 22 },
+                { name: 'Warm Chocolate Fondant', price: 8 }
+            ],
+            "HORIZON LOBBY LOUNGE": [
+                { name: 'Classic Turkish Coffee', price: 4 },
+                { name: 'Espresso / Cappuccino', price: 5 },
+                { name: 'Fresh Mint Lemonade', price: 6 },
+                { name: 'High Tea Set (For Two)', price: 25 },
+                { name: 'Artisan Date Cheesecake', price: 7 }
+            ],
+            "SPA & WELLNESS": [
+                { name: 'Deep Tissue Massage (60m)', price: 85 },
+                { name: 'Hot Stone Therapy (90m)', price: 110 },
+                { name: 'Dead Sea Mud Wrap', price: 75 },
+                { name: 'Anti-Aging Facial', price: 65 },
+                { name: 'Couples Spa Retreat', price: 150 }
+            ],
+            "ROOFTOP+POOL (UNDER THE SKY)": [
+                { name: 'Pool Day Pass (Non-Guest)', price: 35 },
+                { name: 'Private Cabana Rental', price: 70 },
+                { name: 'Piña Colada / Mojito', price: 12 },
+                { name: 'Fresh Coconut Water', price: 8 },
+                { name: 'Club Sandwich & Wedges', price: 14 }
+            ],
+            "CIGAR LOUNGE (FRANCISCO)": [
+                { name: 'Cohiba Siglo VI (Cigar)', price: 65 },
+                { name: 'Montecristo No. 2 (Cigar)', price: 45 },
+                { name: 'Macallan 18yo Single Malt', price: 35 },
+                { name: 'Signature Old Fashioned', price: 15 },
+                { name: 'Premium Cheese Board', price: 28 }
+            ],
+            "IN-ROOM DINING (24/7)": [
+                { name: 'Late Night Margherita Pizza', price: 12 },
+                { name: 'Caesar Salad with Chicken', price: 10 },
+                { name: 'Express Laundry Service', price: 15 },
+                { name: 'Minibar Restock (Standard)', price: 20 }
+            ]
+        };
+        let rooms = JSON.parse(localStorage.getItem('gr_sys_rooms')) || generateHotelRooms();
+        let reservations = JSON.parse(localStorage.getItem('gr_sys_res')) || [];
+        let guestCRM = JSON.parse(localStorage.getItem('gr_sys_crm')) || []; 
+        let complaints = JSON.parse(localStorage.getItem('gr_sys_complaints')) || [];
+        let totalIncome = parseFloat(localStorage.getItem('gr_sys_inc')) || 0;
+        let auditLogs = JSON.parse(localStorage.getItem('gr_sys_logs')) || [];
+        
+        let selectedResIndex = null;
+        let currentViewingGuestID = null;
+
+        function saveData() {
+            localStorage.setItem('gr_sys_rooms', JSON.stringify(rooms));
+            localStorage.setItem('gr_sys_res', JSON.stringify(reservations));
+            localStorage.setItem('gr_sys_crm', JSON.stringify(guestCRM));
+            localStorage.setItem('gr_sys_complaints', JSON.stringify(complaints));
+            localStorage.setItem('gr_sys_inc', totalIncome);
+            localStorage.setItem('gr_sys_logs', JSON.stringify(auditLogs));
+            updateUI();
+        }
+
+        function logAction(action) {
+            const time = new Date().toLocaleString('en-GB');
+            const userPref = currentUser ? `[${currentUser}] ` : '';
+            auditLogs.unshift({ time, action: userPref + action });
+            if (auditLogs.length > 50) auditLogs.pop();
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerText = msg;
+            document.getElementById('toastContainer').appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        function switchTab(tabId, element) {
+            let hasAccess = false;
+            MENU_STRUCTURE.forEach(g => {
+                g.items.forEach(i => {
+                    if(i.id === tabId && i.roles.includes(currentRole)) hasAccess = true;
+                });
+            });
+
+            if(!hasAccess) {
+                showToast("Access Denied: You do not have permission for this section.");
+                return;
+            }
+
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            if(element) {
+                element.classList.add('active');
+                document.getElementById('pageTitle').innerText = element.innerText;
+            }
+            if(tabId === 'crm') renderCRMTable();
+        }
+
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        function filterRoomsByType() {
+            const selectedType = document.getElementById('roomTypeFilter').value;
+            let filteredRooms = rooms.filter(r => r.status === 'available'); 
+            if (selectedType !== 'all') filteredRooms = filteredRooms.filter(r => r.type === selectedType);
+            document.getElementById('roomSelect').innerHTML = filteredRooms.map(r => `<option value="${r.id}">Room ${r.id} - ${r.type} (${r.price})</option>`).join('');
+        }
+
+        function updateUI() {
+            if(!currentUser) return; 
+            const todayISO = new Date().toISOString().split('T')[0];
+            
+            const occupiedRooms = rooms.filter(r => r.status === 'booked').length;
+            const totalRooms = rooms.length; 
+            const occupancyPct = Math.round((occupiedRooms / totalRooms) * 100);
+            
+            let dailyRoomRevenue = reservations.filter(r => r.status === 'checked-in').reduce((sum, r) => sum + (r.cost / Math.max(1, Math.ceil((new Date(r.checkOut) - new Date(r.checkIn)) / 86400000))), 0);
+            
+            const adr = occupiedRooms > 0 ? (dailyRoomRevenue / occupiedRooms) : 0;
+            const revpar = totalRooms > 0 ? (dailyRoomRevenue / totalRooms) : 0;
+
+            const expectedArrivals = reservations.filter(r => r.status === 'pending' && r.checkIn === todayISO).length;
+            const expectedDepartures = reservations.filter(r => r.status === 'checked-in' && r.checkOut === todayISO).length;
+            
+            if(document.getElementById('occupancyRate')) {
+                document.getElementById('occupancyRate').innerText = occupancyPct + '%';
+                document.getElementById('adrVal').innerText = adr.toFixed(2) + ' JOD';
+                document.getElementById('revparVal').innerText = revpar.toFixed(2) + ' JOD';
+                document.getElementById('totalIncome').innerText = totalIncome.toFixed(2) + ' JOD';
+                document.getElementById('expectedArrivals').innerText = expectedArrivals;
+                document.getElementById('expectedDepartures').innerText = expectedDepartures;
+            }
+            
+            filterRoomsByType();
+
+            const availableCount = rooms.filter(r => r.status === 'available').length;
+            const pendingCount = rooms.filter(r => r.status === 'reserved').length;
+            const hkCount = rooms.filter(r => ['dirty', 'cleaning', 'inspected'].includes(r.status)).length;
+            const oooCount = rooms.filter(r => r.status === 'ooo').length;
+            
+            const getPct = (cnt) => ((cnt/totalRooms)*100).toFixed(1);
+
+            if(document.getElementById('cssChartContainer')) {
+                document.getElementById('cssChartContainer').innerHTML = `
+                    <div style="margin-bottom: 18px;">
+                        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--primary);"><span>Available</span><span>${availableCount} (${getPct(availableCount)}%)</span></div>
+                        <div style="width:100%; background:#e5e7eb; border-radius:6px; height:12px;"><div style="width:${getPct(availableCount)}%; background:var(--primary); height:100%; border-radius:6px; transition:0.4s;"></div></div>
+                    </div>
+                    <div style="margin-bottom: 18px;">
+                        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--secondary);"><span>Occupied</span><span>${occupiedRooms} (${getPct(occupiedRooms)}%)</span></div>
+                        <div style="width:100%; background:#e5e7eb; border-radius:6px; height:12px;"><div style="width:${getPct(occupiedRooms)}%; background:var(--secondary); height:100%; border-radius:6px; transition:0.4s;"></div></div>
+                    </div>
+                    <div style="margin-bottom: 18px;">
+                        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--reserved);"><span>Reserved (Pending)</span><span>${pendingCount} (${getPct(pendingCount)}%)</span></div>
+                        <div style="width:100%; background:#e5e7eb; border-radius:6px; height:12px;"><div style="width:${getPct(pendingCount)}%; background:var(--reserved); height:100%; border-radius:6px; transition:0.4s;"></div></div>
+                    </div>
+                    <div style="margin-bottom: 18px;">
+                        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--text-light);"><span>Housekeeping</span><span>${hkCount} (${getPct(hkCount)}%)</span></div>
+                        <div style="width:100%; background:#e5e7eb; border-radius:6px; height:12px;"><div style="width:${getPct(hkCount)}%; background:var(--text-light); height:100%; border-radius:6px; transition:0.4s;"></div></div>
+                    </div>
+                    <div style="margin-bottom: 18px;">
+                        <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:700; margin-bottom:6px; color:var(--ooo);"><span>Out of Order</span><span>${oooCount} (${getPct(oooCount)}%)</span></div>
+                        <div style="width:100%; background:#e5e7eb; border-radius:6px; height:12px;"><div style="width:${getPct(oooCount)}%; background:var(--ooo); height:100%; border-radius:6px; transition:0.4s;"></div></div>
+                    </div>
+                `;
+            }
+
+            if(document.getElementById('auditLogContainer')) {
+                document.getElementById('auditLogContainer').innerHTML = auditLogs.map(log => 
+                    `<div class="log-entry"><span class="log-time">${log.time}</span><span class="log-action">${log.action}</span></div>`
+                ).join('');
+            }
+
+            const pending = reservations.filter(r => r.status === 'pending');
+            const inHouse = reservations.filter(r => r.status === 'checked-in');
+
+            if(document.getElementById('pendingTable')) {
+                document.getElementById('pendingTable').innerHTML = pending.map(res => `
+                    <tr>
+                        <td><strong>${res.guestName}</strong></td>
+                        <td><span style="font-size:10px;background:#eee;padding:2px 5px;border-radius:4px;">${res.channel} / ${res.rateCode}</span></td>
+                        <td><strong>${res.roomId}</strong></td>
+                        <td>
+                            ${res.checkIn} <br>
+                            <span style="font-size:11px; color:var(--text-light); font-weight:600; display:inline-block; margin-top:4px;">
+                                  ${res.flightNo ? res.flightNo : 'N/A'} | ${res.arrivalTime ? res.arrivalTime : 'N/A'}
+                            </span>
+                        </td>
+                        <td><span style="color:var(--reserved); font-weight:bold;">Pending</span></td>
+                        <td>${(currentRole === 'FRONTDESK' || currentRole === 'ADMIN') ? `<button class="btn btn-sm btn-success" onclick="checkInGuest('${res.id}')">Check-In</button>` : 'View Only'}</td>
+                    </tr>
+                `).join('');
+            }
+
+            if(document.getElementById('inHouseTable')) {
+                document.getElementById('inHouseTable').innerHTML = inHouse.map(res => {
+                    const extrasTotal = res.servicesList.reduce((sum, s) => sum + s.price, 0);
+                    return `<tr><td><strong>${res.guestName}</strong></td><td><strong>${res.roomId}</strong></td><td>${res.cost} JOD</td><td>${extrasTotal} JOD</td>
+                    <td>
+                        ${(currentRole === 'FRONTDESK' || currentRole === 'ADMIN' || currentRole === 'NIGHTAUDIT') ? `<button class="btn btn-sm btn-gold" onclick="openPOS('${res.id}')">POS</button> <button class="btn btn-sm btn-danger" onclick="checkout('${res.id}')">Bill</button>` : 'View Only'}
+                    </td></tr>`;
+                }).join('');
+            }
+
+            if(document.getElementById('floorsContainer')) {
+                let floorsHtml = '';
+                for (let floor = 5; floor >= 1; floor--) {
+                    const floorRooms = rooms.filter(r => r.floor === floor);
+                    floorsHtml += `<div class="floor-section"><div class="floor-title">Floor ${floor}</div><div class="rooms-grid">` + 
+                        floorRooms.map(r => {
+                            let guestHtml = '';
+                            if (r.status === 'booked') {
+                                const res = reservations.find(res => res.roomId === r.id && res.status === 'checked-in');
+                                if (res) guestHtml = `<span style="color:var(--secondary); font-weight:bold; font-size:10px;">${res.guestName.split(' ')[0]}</span>`;
+                            }
+                            return `<div class="room-card ${r.status}">${r.id}<span>${r.type}</span>${guestHtml}</div>`;
+                        }).join('') + `</div></div>`;
+                }
+                document.getElementById('floorsContainer').innerHTML = floorsHtml;
+            }
+
+            if(document.getElementById('housekeepingTable')) {
+                document.getElementById('housekeepingTable').innerHTML = rooms.filter(r => ['dirty', 'cleaning', 'inspected'].includes(r.status)).map(r => {
+                    let action = '', statusLabel = '';
+                    if (r.status === 'dirty') { statusLabel = 'Dirty'; action = `<button class="btn btn-sm btn-primary" onclick="updateHK(${r.id}, 'cleaning')">Cleaning</button>`; } 
+                    else if (r.status === 'cleaning') { statusLabel = 'Cleaning'; action = `<button class="btn btn-sm btn-success" onclick="updateHK(${r.id}, 'inspected')">Inspected</button>`; } 
+                    else if (r.status === 'inspected') { statusLabel = 'Inspected'; action = `<button class="btn btn-sm btn-gold" onclick="updateHK(${r.id}, 'available')">Available</button>`; }
+                    return `<tr><td><strong>${r.id}</strong></td><td>${r.type}</td><td>${statusLabel}</td><td>${action}</td></tr>`;
+                }).join('');
+            }
+
+            if(document.getElementById('maintRoomSelect')) {
+                document.getElementById('maintRoomSelect').innerHTML = rooms.filter(r => !['booked', 'reserved', 'ooo'].includes(r.status)).map(r => `<option value="${r.id}">${r.id}</option>`).join('');
+                document.getElementById('oooTable').innerHTML = rooms.filter(r => r.status === 'ooo').map(r => `<tr><td>${r.id}</td><td>${r.maintReason}</td><td><button class="btn btn-sm btn-primary" onclick="resolveOOO(${r.id})">Fix (To Dirty)</button></td></tr>`).join('');
+            }
+
+            if(document.getElementById('complaintGuestSelect')) {
+                document.getElementById('complaintGuestSelect').innerHTML = inHouse.map(r => `<option value="${r.id}">${r.guestName} (Room ${r.roomId})</option>`).join('');
+                document.getElementById('complaintsTable').innerHTML = complaints.map((c, i) => `
+                    <tr><td>${c.guestName}</td><td>${c.room}</td><td>${c.issue}</td>
+                    <td>${c.status === 'Open' ? '<span style="color:var(--danger);font-weight:bold;">Open</span>' : '<span style="color:var(--success);font-weight:bold;">Resolved</span>'}</td>
+                    <td>${(c.status === 'Open' && (currentRole === 'ADMIN' || currentRole === 'CONCIERGE')) ? `<button class="btn btn-sm btn-success" onclick="resolveComplaint(${i})">Resolve</button>` : ''}</td></tr>
+                `).join('');
+            }
+            if(document.getElementById('kpiTableBody')) renderKPI();
+        }
+
+        function runNightAudit() {
+    if(!confirm("WARNING: Running End of Day (Night Audit) will settle daily balances and reset daily KPI counters. Proceed?")) return;
+    
+    logAction("NIGHT AUDIT: End of Day sequence initiated by system.");
+    showToast("Running Night Audit Procedures...");
+    
+    setTimeout(() => {
+        // هون الزبدة: تصفير داتا الـ KPI للموظفين
+        localStorage.removeItem('nour_kpi');
+        
+        logAction("NIGHT AUDIT: Room rates posted. KPIs reset. Systems rolled to next business day.");
+        showToast("Night Audit Completed Successfully. KPIs Reset.");
+        
+        // تحديث الشاشات عشان يبين التصفير فوراً
+        updateUI();
+        if (document.getElementById('kpiTableBody')) renderKPI(); 
+    }, 2000);
+}
+       function createReservation() {
+    const guest = { name: document.getElementById('guestName').value, phone: document.getElementById('guestPhone').value, id: document.getElementById('guestID').value };
+    const channel = document.getElementById('bookingChannel').value;
+    const rateCode = document.getElementById('rateCode').value;
+    const payment = document.getElementById('guestPayment').value;
+    const roomId = parseInt(document.getElementById('roomSelect').value);
+    const checkIn = document.getElementById('checkIn').value;
+    const checkOut = document.getElementById('checkOut').value;
+    const bookingStatus = document.getElementById('bookingStatus').value;
+    const flightNo = document.getElementById('flightNo').value;
+    const arrivalTime = document.getElementById('arrivalTime').value;
+    
+    // سحب ملاحظات الضيف
+    const preferences = document.getElementById('guestPreferences').value;
+
+    if(!guest.name || !roomId || !checkIn || !checkOut) return showToast('Error: Missing Fields.');
+    const diffDays = Math.ceil((new Date(checkOut) - new Date(checkIn)) / 86400000); 
+    if(diffDays <= 0) return showToast('Error: Invalid Dates.');
+
+    let profile = guestCRM.find(p => p.id === guest.id);
+    if (!profile) {
+        profile = { id: guest.id, name: guest.name, phone: guest.phone, totalSpent: 0, stays: 0, comments: [], history: [] };
+        guestCRM.push(profile);
+    }
+
+    // إذا في ملاحظة، ضيفها فوراً لملف الضيف عشان تضل محفوظة للمستقبل
+    if(preferences.trim() !== '') {
+        profile.comments.push({ text: `[Booking Note]: ${preferences}` });
+    }
+
+    const room = rooms.find(r => r.id === roomId);
+    const resId = 'RES-' + Math.floor(Math.random() * 90000 + 10000);
+    
+    let finalRate = room.price;
+    if(rateCode === 'PROMO') finalRate = finalRate * 0.8;
+    if(rateCode === 'CORP') finalRate = finalRate * 0.85;
+
+    reservations.push({ 
+        id: resId, status: bookingStatus, guestName: guest.name, guestID: guest.id, guestPhone: guest.phone, 
+        payment, channel, rateCode, roomId, checkIn, checkOut, cost: (diffDays * finalRate), servicesList: [],
+        flightNo, arrivalTime, preferences // ضفناها جوا الحجز كمان
+    });
+    
+    room.status = bookingStatus === 'checked-in' ? 'booked' : 'reserved';
+    
+    // تفريغ المربعات بعد الحجز
+    document.querySelectorAll('input[type="text"], input[type="tel"], input[type="date"], input[type="time"]').forEach(i => i.value = '');
+    // تسجيل الـ KPI للموظف الحالي (تتبع الحجوزات)
+    let kpiData = JSON.parse(localStorage.getItem('nour_sys_kpi')) || {};
+    if(!kpiData[currentUser]) kpiData[currentUser] = { role: currentRole, bookings: 0, posRev: 0 };
+    kpiData[currentUser].bookings += 1;
+    localStorage.setItem('nour_sys_kpi', JSON.stringify(kpiData));
+    saveData();
+    showToast('Booking Generated successfully.');
+    switchTab(bookingStatus === 'checked-in' ? 'in-house' : 'arrival-screen', document.querySelector(bookingStatus === 'checked-in' ? '[onclick="switchTab(\'in-house\', this)"]' : '[onclick="switchTab(\'arrival-screen\', this)"]'));
+}
+        function checkInGuest(resId) {
+            const res = reservations.find(r => r.id === resId);
+            res.status = 'checked-in';
+            rooms.find(r => r.id === res.roomId).status = 'booked'; 
+            logAction(`Arrival: ${res.guestName} checked in.`);
+            saveData();
+            switchTab('in-house', document.querySelector('[onclick="switchTab(\'in-house\', this)"]'));
+        }
+
+        function openPOS(id) {
+            selectedResIndex = reservations.findIndex(r => r.id === id);
+            let h = '';
+            for(const [cat, srvs] of Object.entries(posCatalog)) {
+                // ضفنا الفئة (cat) عشان السيستم يعرف من وين إجى الطلب
+                h += `<div class="service-category">${cat}</div>` + srvs.map(s => `<div class="service-item" onclick="postCharge('${s.name}', ${s.price}, '${cat}')">${s.name} <span>${s.price} JOD</span></div>`).join('');
+            }
+            document.getElementById('predefinedServicesList').innerHTML = h;
+            
+            // تصفير خيار الدفع للوضع الافتراضي لما تفتح الشاشة
+            if(document.getElementById('posPaymentMethod')) document.getElementById('posPaymentMethod').value = 'room';
+            document.getElementById('servicesModal').style.display = 'flex';
+        }
+
+        function postCharge(name, price, category) {
+            const paymentMethod = document.getElementById('posPaymentMethod').value;
+            const res = reservations[selectedResIndex];
+
+            // تسجيل الـ KPI للموظف 
+            let kpi = JSON.parse(localStorage.getItem('nour_kpi')) || {};
+            if(!kpi[currentUser]) kpi[currentUser] = { role: currentRole, bookings:0, posRev:0 };
+            kpi[currentUser].posRev += price;
+            localStorage.setItem('nour_kpi', JSON.stringify(kpi));
+
+            // الفرز حسب طريقة الدفع
+            if (paymentMethod === 'room') {
+                // بتنزل على فاتورة الغرفة 
+                res.servicesList.push({ name: `${category}: ${name}`, price, date: new Date().toLocaleDateString() });
+                showToast(`Charge Posted: ${name} successfully billed to Room ${res.roomId}.`);
+            } else {
+                // رسالة الدفع المباشر الاحترافية
+                alert(`[ TRANSACTION SETTLED SUCCESSFULLY ]\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nOutlet:\t\t${category}\nItem:\t\t${name}\nAmount Paid:\t${price}.00 JOD\nSettlement:\tDirect Point of Sale (POS)\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n* Note: This transaction is closed and will NOT be posted to the guest's room folio.`);
+            }
+
+            saveData(); 
+            closeModal('servicesModal');
+        }
+            
+
+        function logComplaint() {
+            const resId = document.getElementById('complaintGuestSelect').value;
+            const text = document.getElementById('complaintText').value;
+            if(!resId || !text) return;
+            const res = reservations.find(r => r.id === resId);
+            complaints.push({ resId, guestName: res.guestName, room: res.roomId, issue: text, status: 'Open' });
+            logAction(`COMPLAINT: Room ${res.roomId} - ${text}`);
+            document.getElementById('complaintText').value = '';
+            saveData();
+            showToast('Complaint Logged.');
+        }
+
+        function resolveComplaint(index) {
+            complaints[index].status = 'Resolved';
+            logAction(`COMPLAINT RESOLVED: Room ${complaints[index].room}`);
+            saveData();
+        }
+
+        function checkout(resId) {
+            const index = reservations.findIndex(r => r.id === resId);
+            const res = reservations[index];
+            const extrasTotal = res.servicesList.reduce((sum, s) => sum + s.price, 0);
+            const subtotal = res.cost + extrasTotal;
+            const serviceCharge = subtotal * 0.10;
+            const tax = subtotal * 0.16;
+            const grandTotal = subtotal + serviceCharge + tax;
+
+            document.getElementById('invNumber').innerText = `Folio No: FOL-${Math.floor(Math.random() * 90000 + 10000)}`;
+            document.getElementById('invDate').innerText = `Date: ${new Date().toLocaleDateString('en-GB')}`;
+            document.getElementById('invoiceGuestInfo').innerHTML = `
+                <div><p><strong>Guest Name:</strong> ${res.guestName}</p><p><strong>Payment Method:</strong> ${res.payment}</p><p><strong>Booking Channel:</strong> ${res.channel} (${res.rateCode})</p></div>
+                <div style="text-align:right;"><p><strong>Room Number:</strong> ${res.roomId}</p><p><strong>Arrival Date:</strong> ${res.checkIn}</p><p><strong>Departure Date:</strong> ${res.checkOut}</p></div>
+            `;
+            
+            let itemsHtml = `<tr><td>${res.checkIn}</td><td>Accommodation Charge - ${res.rateCode}</td><td style="text-align:right;">${res.cost.toFixed(2)}</td></tr>`;
+            res.servicesList.forEach(s => itemsHtml += `<tr><td>${s.date}</td><td>${s.category}: ${s.name}</td><td style="text-align:right;">${s.price.toFixed(2)}</td></tr>`);
+            document.getElementById('invoiceItems').innerHTML = itemsHtml;
+            document.getElementById('invSubtotal').innerText = subtotal.toFixed(2) + ' JOD';
+            document.getElementById('invService').innerText = serviceCharge.toFixed(2) + ' JOD';
+            document.getElementById('invTax').innerText = tax.toFixed(2) + ' JOD';
+            document.getElementById('invTotal').innerText = grandTotal.toFixed(2) + ' JOD';
+
+            window.print();
+
+            setTimeout(() => {
+                if(confirm(`Settle folio for Room ${res.roomId}? Total: ${grandTotal.toFixed(2)} JOD`)) {
+                    totalIncome += grandTotal;
+                    rooms.find(r => r.id === res.roomId).status = 'dirty'; 
+                    let profile = guestCRM.find(p => p.id === res.guestID);
+                    if(profile) { profile.stays += 1; profile.totalSpent += grandTotal; profile.history.push({ room: res.roomId, checkIn: res.checkIn, checkOut: res.checkOut, amount: grandTotal }); }
+                    logAction(`Billing: Folio Settled for Room ${res.roomId}.`);
+                    reservations.splice(index, 1);
+                    saveData();
+                }
+            }, 1000);
+        }
+
+        function renderCRMTable() {
+            const term = document.getElementById('crmSearch').value.toLowerCase();
+            document.getElementById('crmTableBody').innerHTML = guestCRM.filter(p => p.name.toLowerCase().includes(term) || p.id.includes(term)).map(p => `<tr><td><strong>${p.name}</strong></td><td>${p.id}</td><td>${p.phone || 'N/A'}</td><td>${p.stays}</td><td><button class="btn btn-sm btn-outline" onclick="openCRMProfile('${p.id}')">Preferences</button></td></tr>`).join('');
+        }
+
+        function openCRMProfile(id) {
+            const p = guestCRM.find(x => x.id === id);
+            currentViewingGuestID = id;
+            
+            document.getElementById('crmModName').innerText = p.name;
+            document.getElementById('crmModID').innerText = `ID: ${p.id}`;
+            document.getElementById('crmModPhone').innerText = `Phone: ${p.phone || 'N/A'}`;
+            
+            document.getElementById('editCrmName').value = p.name;
+            document.getElementById('editCrmPhone').value = p.phone || '';
+            
+            document.getElementById('crmDisplayMode').style.display = 'block';
+            document.getElementById('crmEditMode').style.display = 'none';
+
+            document.getElementById('crmCommentsContainer').innerHTML = p.comments.map(c => `<p style="font-size:12px; padding:8px; background:#f0fdf4; border-left: 3px solid var(--success); margin-bottom:5px; border-radius: 4px;">${c.text}</p>`).join('');
+            document.getElementById('crmHistoryTable').innerHTML = p.history.map(h => `<tr><td>Room ${h.room}</td><td>${h.checkIn}</td><td>${h.checkOut}</td><td>${h.amount.toFixed(2)} JOD</td></tr>`).join('');
+            
+            document.getElementById('crmProfileModal').style.display = 'flex';
+        }
+
+        function toggleEditCRM() {
+            const displayMode = document.getElementById('crmDisplayMode');
+            const editMode = document.getElementById('crmEditMode');
+            if (displayMode.style.display === 'none') {
+                displayMode.style.display = 'block';
+                editMode.style.display = 'none';
+            } else {
+                displayMode.style.display = 'none';
+                editMode.style.display = 'block';
+            }
+        }
+
+        function saveCRMProfile() {
+            const newName = document.getElementById('editCrmName').value;
+            const newPhone = document.getElementById('editCrmPhone').value;
+            if(!newName) return showToast('Error: Guest Name is required!');
+            let p = guestCRM.find(x => x.id === currentViewingGuestID);
+            p.name = newName; p.phone = newPhone;
+            saveData(); showToast('Guest profile updated.'); renderCRMTable(); openCRMProfile(currentViewingGuestID); 
+        }
+
+        function addGuestComment() {
+            const t = document.getElementById('newCommentInput').value;
+            if(!t) return;
+            guestCRM.find(p => p.id === currentViewingGuestID).comments.push({ text: t });
+            document.getElementById('newCommentInput').value = '';
+            saveData(); openCRMProfile(currentViewingGuestID);
+        }
+
+        function updateHK(roomId, s) { rooms.find(r => r.id === roomId).status = s; logAction(`Housekeeping: Room ${roomId} -> ${s.toUpperCase()}`); saveData(); }
+        function setOutOfOrder() { const roomId = parseInt(document.getElementById('maintRoomSelect').value); rooms.find(r => r.id === roomId).status = 'ooo'; rooms.find(r => r.id === roomId).maintReason = document.getElementById('maintReason').value || 'Maint.'; logAction(`Maintenance: Room ${roomId} set OOO`); saveData(); }
+        function resolveOOO(roomId) { rooms.find(r => r.id === roomId).status = 'dirty'; rooms.find(r => r.id === roomId).maintReason=''; logAction(`Maintenance: Room ${roomId} resolved.`); saveData(); }
+
+        function quickBookGuest() {
+            if(!currentViewingGuestID) return;
+            
+            const p = guestCRM.find(x => x.id === currentViewingGuestID);
+            if(!p) return;
+
+            closeModal('crmProfileModal');
+
+            const tabs = document.querySelectorAll('.nav-item');
+            let resTab = null;
+            tabs.forEach(tab => {
+                if(tab.getAttribute('onclick') && tab.getAttribute('onclick').includes('reservations')) {
+                    resTab = tab;
+                }
+            });
+            switchTab('reservations', resTab);
+
+            document.getElementById('guestName').value = p.name;
+            document.getElementById('guestID').value = p.id;
+            document.getElementById('guestPhone').value = p.phone || '';
+
+            showToast('Guest data has been retrieved!');
+        }
+        function renderKPI() {
+            let kpiData = JSON.parse(localStorage.getItem('nour_sys_kpi')) || {};
+            let html = '';
+            for (const [empName, stats] of Object.entries(kpiData)) {
+                html += `<tr>
+                    <td><strong>${empName}</strong></td>
+                    <td><span style="font-size: 10px; background: var(--bg); padding: 2px 8px; border-radius: 10px; font-weight: bold; color: var(--primary);">${stats.role}</span></td>
+                    <td><strong style="color:var(--success); font-size: 16px;">${stats.bookings}</strong></td>
+                    <td><strong style="color:var(--secondary); font-size: 16px;">${stats.posRev} JOD</strong></td>
+                </tr>`;
+    }
+    const tbody = document.getElementById('kpiTableBody');
+    if(tbody) tbody.innerHTML = html || '<tr><td colspan="4">No data recorded yet. Start booking to see stats.</td></tr>';
+}
+    </script>
+</body>
+</html>
